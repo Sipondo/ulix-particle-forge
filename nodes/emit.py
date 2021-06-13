@@ -12,7 +12,7 @@ class Node_Emit(SystemNode):
     content_label_objname = "node_emit"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[0], outputs=[0, 1])
+        super().__init__(scene, inputs=[], outputs=[0])
         self.eval()
         self.setBinding()
 

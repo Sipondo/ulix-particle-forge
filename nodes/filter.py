@@ -12,7 +12,7 @@ class Node_Filter(SystemNode):
     content_label_objname = "node_filter"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[1], outputs=[1])
+        super().__init__(scene, inputs=[1], outputs=[0])
         self.eval()
         self.setBinding()
 

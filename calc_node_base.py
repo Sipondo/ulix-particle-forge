@@ -41,27 +41,31 @@ class CalcContent(QDMNodeContentWidget):
     def initUI(self):
         lbl = QLabel(self.node.content_label, self)
         lbl.setObjectName(self.node.content_label_objname)
-        
-
 
 
 class SystemNode(Node):
     icon = ""
     op_code = 0
     op_title = "Undefined"
+    binding = False
     content_label = ""
     content_label_objname = "calc_node_bg"
 
     GraphicsNode_class = GraphicsNode
     NodeContent_class = CalcContent
 
-    def __init__(self, scene, inputs=[2, 2], outputs=[1]):
+    def __init__(self, scene, inputs=[1], outputs=[]):
         super().__init__(scene, self.__class__.op_title, inputs, outputs)
 
         self.value = None
 
         # it's really important to mark all nodes Dirty by default
         self.markDirty()
+        self.eval()
+
+        print(self.op_title)
+        if self.binding:
+            self.content.binding = self.binding
 
     def initSettings(self):
         super().initSettings()
@@ -146,3 +150,10 @@ class SystemNode(Node):
         self.evalChildren()
 
         return self.value
+
+
+# class GeoNode(SystemNode):
+#     def __init__(self, scene):
+#         super().__init__(scene, inputs=[1], outputs=[])
+#         self.eval()
+#         self.setBinding()

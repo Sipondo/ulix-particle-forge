@@ -5,16 +5,16 @@ from calc_node_base import *
 
 
 @register_node(OP_NODE_STAGE)
-class Node_System(SystemNode):
+class Node_Stage(SystemNode):
     icon = "icon/system.png"
     op_code = OP_NODE_STAGE
     op_title = "Stage"
     content_label_objname = "node_stage"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[0], outputs=[0])
+        super().__init__(scene, inputs=[], outputs=[0, 1])
         self.eval()
         self.setBinding()
 
     def setBinding(self):
-        self.content.binding = []
+        self.content.binding = [["box", "General", [["line", "Stage ID", "scene", 0]]]]

@@ -7,10 +7,6 @@ from nodeeditor.utils import dumpException
 
 class NodeContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit(str(self.node.op_code), self)
-        self.edit.setAlignment(Qt.AlignRight)
-        self.edit.setObjectName(self.node.content_label_objname)
-
         self.fields = {}
         self.binding = []
 

@@ -21,7 +21,7 @@ class QDMDragListbox(QListWidget):
 
     def addMyItems(self):
         keys = list(CALC_NODES.keys())
-        keys.sort()
+        # keys.sort()
         for key in keys:
             node = get_class_from_opcode(key)
             self.addMyItem(node.op_title, node.icon, node.op_code)
