@@ -12,7 +12,7 @@ class Node_Render(SystemNode):
     content_label_objname = "node_render"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[1, 2], outputs=[])
+        super().__init__(scene, inputs=[1], outputs=[])
         self.eval()
         self.setBinding()
 
@@ -22,6 +22,7 @@ class Node_Render(SystemNode):
                 "box",
                 "General",
                 [
+                    ["line", "Filename", "file", "scorch_01"],
                     ["line", "Equation", "equation", "Add"],
                     ["line", "Depth", "depth", 0],
                     ["line", "Max Count", "max_count", 10000],

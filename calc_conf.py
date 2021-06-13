@@ -132,10 +132,10 @@ GeoNodes = {}
 for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
     with open(blockfile, "r") as infile:
         geoblock = infile.read()
-    print(blockfile.stem)
+    # print(blockfile.stem)
     constants = geoblock.split("// CONSTANTS")[1].split("// CONSTANTS_END")[0].strip()
 
-    print(constants.split("\n"))
+    # print(constants.split("\n"))
 
     binding = []
     box = []
@@ -180,7 +180,12 @@ for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
                 ]
             )
 
-    name = f"Geo {blockfile.stem.capitalize()}"
+    name = " ".join(
+        [
+            x.capitalize()
+            for x in f"Geo {blockfile.stem.capitalize()}".replace("_", " ").split(" ")
+        ]
+    )
     system_name = name.replace(" ", "_")
     h = Int4Hash.as_int(blockfile.stem)
 
@@ -190,7 +195,9 @@ for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
         {
             # constructor
             # data members
-            "icon": "icon/geo.png",
+            "icon": "icon/geo.png"
+            if "stage" not in name.lower()
+            else "icon/filter.png",
             "op_code": h,
             "op_title": name,
             "content_label_objname": system_name,

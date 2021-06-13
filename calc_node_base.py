@@ -55,6 +55,9 @@ class SystemNode(Node):
     NodeContent_class = CalcContent
 
     def __init__(self, scene, inputs=[1], outputs=[]):
+        if "geo" in self.op_title.lower() and "stage" in self.op_title.lower():
+            inputs = [1, 0]
+            outputs = []
         super().__init__(scene, self.__class__.op_title, inputs, outputs)
 
         self.value = None
@@ -136,7 +139,7 @@ class SystemNode(Node):
         self.content = NodeContent(self)
         self.grNode = GraphicsNode(self)
         self.grNode.width = 200
-        self.grNode.height = 200
+        self.grNode.height = 60
 
     def evalImplementation(self):
         self.markDirty(False)

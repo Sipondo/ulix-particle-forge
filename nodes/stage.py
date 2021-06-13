@@ -17,4 +17,4 @@ class Node_Stage(SystemNode):
         self.setBinding()
 
     def setBinding(self):
-        self.content.binding = [["box", "General", [["line", "Stage ID", "scene", 0]]]]
+        self.content.binding = [["box", "General", [["line", "Stage ID", "stage", 0]]]]
