@@ -40,37 +40,31 @@ class Node_Emit(SystemNode):
                 [
                     ["line", "Duration", "duration", 1.5],
                     ["line", "Count", "count", 100],
-                    ["line", "Max Count", "max_count", 100000],
-                    ["line", "Curve x =", "curve", "y"],
                 ],
             ],
             [
                 "box",
                 "Position",
                 [
-                    [
-                        "multi",
-                        "Pos",
-                        [["x", "pos_x", -17.5], ["x σ", "pos_range_x", 0]],
-                    ],
-                    ["multi", "Pos", [["y", "pos_y", -2], ["y σ", "pos_range_y", 0]],],
-                    ["multi", "Pos", [["z", "pos_z", 5], ["z σ", "pos_range_z", 0]],],
+                    ["multi", "Pos", [["x", "pos_x", -1], ["x σ", "pos_range_x", 0]],],
+                    ["multi", "Pos", [["y", "pos_y", 0], ["y σ", "pos_range_y", 0]],],
+                    ["multi", "Pos", [["z", "pos_z", 0], ["z σ", "pos_range_z", 0]],],
                 ],
             ],
             [
                 "box",
                 "Velocity",
                 [
-                    ["multi", "Vel", [["x", "vel_x", 120], ["x σ", "vel_range_x", 0]],],
-                    ["multi", "Vel", [["y", "vel_y", 4], ["y σ", "vel_range_y", 0]],],
-                    ["multi", "Vel", [["z", "vel_z", -15], ["z σ", "vel_range_z", 0]],],
+                    ["multi", "Vel", [["x", "vel_x", 6], ["x σ", "vel_range_x", 0]],],
+                    ["multi", "Vel", [["y", "vel_y", 0], ["y σ", "vel_range_y", 0]],],
+                    ["multi", "Vel", [["z", "vel_z", 0], ["z σ", "vel_range_z", 0]],],
                 ],
             ],
             [
                 "box",
                 "Rotation",
                 [
-                    ["multi", "", [["Value", "rot", 0], ["Range", "rot_range", 0]]],
+                    ["multi", "", [["Value", "rot", 0], ["Range", "rot_range", 360]]],
                     [
                         "multi",
                         "",

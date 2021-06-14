@@ -155,29 +155,40 @@ for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
             box[2].append(["line", varn.replace("_", " ").capitalize(), varn, value])
         if typ == "vec3":
             value = value.split("(")[1].split(")")[0].strip().split(",")
+            # box[2].append(
+            #     [
+            #         "line",
+            #         f'{varn.replace("_", " ").capitalize()} x',
+            #         f"{varn}_X",
+            #         value[0],
+            #     ]
+            # )
+            # box[2].append(
+            #     [
+            #         "line",
+            #         f'{varn.replace("_", " ").capitalize()} y',
+            #         f"{varn}_Y",
+            #         value[1],
+            #     ]
+            # )
+            # box[2].append(
+            #     [
+            #         "line",
+            #         f'{varn.replace("_", " ").capitalize()} z',
+            #         f"{varn}_Z",
+            #         value[2],
+            #     ]
+            # )
             box[2].append(
                 [
-                    "line",
-                    f'{varn.replace("_", " ").capitalize()} x',
-                    f"{varn}_X",
-                    value[0],
-                ]
-            )
-            box[2].append(
-                [
-                    "line",
-                    f'{varn.replace("_", " ").capitalize()} y',
-                    f"{varn}_Y",
-                    value[1],
-                ]
-            )
-            box[2].append(
-                [
-                    "line",
-                    f'{varn.replace("_", " ").capitalize()} z',
-                    f"{varn}_Z",
-                    value[2],
-                ]
+                    "multi",
+                    varn.replace("_", " ").capitalize(),
+                    [
+                        [f"x", f"{varn}_X", value[0]],
+                        [f"y", f"{varn}_Y", value[1]],
+                        [f"z", f"{varn}_Z", value[2]],
+                    ],
+                ],
             )
 
     name = " ".join(
@@ -196,7 +207,7 @@ for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
             # constructor
             # data members
             "icon": "icon/geo.png"
-            if "stage" not in name.lower()
+            if "filter" not in name.lower()
             else "icon/filter.png",
             "op_code": h,
             "op_title": name,

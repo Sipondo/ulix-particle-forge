@@ -25,9 +25,7 @@ class Node_Render(SystemNode):
                     ["line", "Filename", "file", "scorch_01"],
                     ["line", "Equation", "equation", "Add"],
                     ["line", "Depth", "depth", 0],
-                    ["line", "Max Count", "max_count", 10000],
                     ["line", "Opacity", "opacity", 1.0],
-                    ["line", "Frequency", "render_frequency", 200],
                 ],
             ],
             [

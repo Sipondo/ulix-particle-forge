@@ -55,7 +55,7 @@ class SystemNode(Node):
     NodeContent_class = CalcContent
 
     def __init__(self, scene, inputs=[1], outputs=[]):
-        if "geo" in self.op_title.lower() and "stage" in self.op_title.lower():
+        if "geo filter" == self.op_title[:10].lower():
             inputs = [1, 0]
             outputs = []
         super().__init__(scene, self.__class__.op_title, inputs, outputs)
