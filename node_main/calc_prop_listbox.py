@@ -59,6 +59,24 @@ class MultiInputLine(QWidget):
             createInput(self.layout, node, b[1], b[2])
 
 
+class MultiToggleLine(QWidget):
+    def __init__(self, node, binding, parent=None):
+        super().__init__(parent)
+        self.layout = QHBoxLayout()
+        self.layout.setContentsMargins(5, 5, 5, 5)
+        self.setLayout(self.layout)
+
+        length = len(binding[2])
+        self.layout.addWidget(QLabel(binding[1]))
+
+        for i in range(length):
+            b = binding[2][i]
+            # print(b)
+            self.layout.addWidget(QLabel(b[0]))
+
+            createToggle(self.layout, node, b[1], b[2])
+
+
 class MultiInputToggleLine(QWidget):
     def __init__(self, node, binding, parent=None):
         super().__init__(parent)
@@ -96,6 +114,18 @@ class InputLine(QWidget):
         createInput(self.layout, node, binding[2], binding[3])
 
 
+class ToggleLine(QWidget):
+    def __init__(self, node, binding, parent=None):
+        super().__init__(parent)
+        self.layout = QHBoxLayout()
+        self.layout.setContentsMargins(5, 5, 5, 5)
+        self.setLayout(self.layout)
+
+        # print(binding)
+        self.layout.addWidget(QLabel(binding[1]))
+        createToggle(self.layout, node, binding[2], binding[3])
+
+
 # class InputDropList(QWidget):
 #     def __init__(self, node, binding, parent=None):
 #         super().__init__(parent)
@@ -120,7 +150,9 @@ class widgetContent(QWidget):
 
 INPUT_DICT = {
     "line": InputLine,
+    "toggle": ToggleLine,
     "multi": MultiInputLine,
+    "multitog": MultiToggleLine,
     "multitoggle": MultiInputToggleLine,
     "box": InputBoxWrapper,
 }
@@ -130,6 +162,14 @@ def createInput(layout, node, tag, base):
     value = node.getInputValue(tag, base)
     widget = QLineEdit(str(value))
     widget.textChanged.connect(lambda x: node.setInputValue(tag, widget.text()))
+    layout.addWidget(widget)
+
+
+def createToggle(layout, node, tag, base):
+    value = node.getInputValue(tag, base)
+    widget = QCheckBox()
+    widget.setChecked(bool(value))
+    widget.stateChanged.connect(lambda x: node.setInputValue(tag, widget.isChecked()))
     layout.addWidget(widget)
 
 

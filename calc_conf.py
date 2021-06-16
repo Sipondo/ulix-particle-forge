@@ -30,16 +30,12 @@ class Int4Hash:
 
 LISTBOX_MIMETYPE = "application/x-item"
 
-OP_NODE_IMAGE = 3
 OP_NODE_RENDER = 4
 OP_NODE_CAMERA = 5
-OP_NODE_DELAY = 6
-OP_NODE_FILTER = 7
 OP_NODE_STAGE = 8
 OP_NODE_EMIT = 9
-OP_NODE_SHIFT = 10
 OP_NODE_TRIGGER = 11
-OP_NODE_TRANSFORM = Int4Hash.as_int("transform")
+OP_NODE_TRANSFORM = max(12, Int4Hash.as_int("transform"))
 print(OP_NODE_TRANSFORM)
 
 CALC_NODES = {}
@@ -60,7 +56,7 @@ class OpCodeNotRegistered(ConfException):
 def register_node_now(op_code, class_reference):
     if op_code in CALC_NODES:
         raise InvalidNodeRegistration(
-            "Duplicite node registration of '%s'. There is already %s"
+            "Duplicate node registration of '%s'. There is already %s"
             % (op_code, CALC_NODES[op_code])
         )
     CALC_NODES[op_code] = class_reference
@@ -110,26 +106,9 @@ binding = [
 ]
 
 
-# # creating class dynamically
-# Node_Transform = type(
-#     "Node_Transform",
-#     (SystemNode,),
-#     {
-#         # constructor
-#         # data members
-#         "icon": "icon/particle.png",
-#         "op_code": OP_NODE_TRANSFORM,
-#         "op_title": "Transform",
-#         "content_label_objname": "node_transform",
-#         "binding": binding,
-#     },
-# )
-
-# register_node_now(OP_NODE_TRANSFORM, Node_Transform)
-
 GeoNodes = {}
 
-for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
+for blockfile in Path("resources/shader/p4geoblocks").glob("*.glsl"):
     with open(blockfile, "r") as infile:
         geoblock = infile.read()
     # print(blockfile.stem)
@@ -153,6 +132,55 @@ for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
 
         if typ in ("float", "int",):
             box[2].append(["line", varn.replace("_", " ").capitalize(), varn, value])
+        if typ in ("bool",):
+            if len(box[2]):
+                prev = box[2][-1]
+
+                if prev[0] == "toggle":
+                    box[2].pop()
+                    box[2].append(
+                        [
+                            "multitog",
+                            "",
+                            [
+                                prev[1:],
+                                [
+                                    varn.replace("_", " ").capitalize(),
+                                    varn,
+                                    value.lower().strip() == "true",
+                                ],
+                            ],
+                        ]
+                    )
+                    continue
+                if prev[0] == "multitog":
+                    box[2].pop()
+                    box[2].append(
+                        [
+                            "multitog",
+                            "",
+                            prev[2]
+                            + [
+                                [
+                                    varn.replace("_", " ").capitalize(),
+                                    varn,
+                                    value.lower().strip()[-1]
+                                    if value.lower().strip()[-1] in ("y", "z")
+                                    else value.lower().strip() == "true",
+                                ]
+                            ],
+                        ]
+                    )
+                    # print(box[2])
+                    continue
+            box[2].append(
+                [
+                    "toggle",
+                    varn.replace("_", " ").capitalize(),
+                    varn,
+                    value.lower().strip() == "true",
+                ]
+            )
         if typ == "vec3":
             value = value.split("(")[1].split(")")[0].strip().split(",")
             # box[2].append(
@@ -194,7 +222,11 @@ for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
     name = " ".join(
         [
             x.capitalize()
-            for x in f"Geo {blockfile.stem.capitalize()}".replace("_", " ").split(" ")
+            for x in f"{'Geo ' if not 'filter' in blockfile.stem.lower() else ''}{blockfile.stem.capitalize()}".replace(
+                "_", " "
+            ).split(
+                " "
+            )
         ]
     )
     system_name = name.replace(" ", "_")

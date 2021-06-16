@@ -18,6 +18,7 @@ class NodeContent(QDMNodeContentWidget):
             return base
 
     def setInputValue(self, tag, value):
+        print(tag, value)
         self.fields[tag] = value
 
     def serialize(self):

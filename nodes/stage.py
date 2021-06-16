@@ -2,6 +2,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtWidgets
 from calc_conf import *
 from calc_node_base import *
+from numpy.random import randint
 
 
 @register_node(OP_NODE_STAGE)
@@ -17,4 +18,10 @@ class Node_Stage(SystemNode):
         self.setBinding()
 
     def setBinding(self):
-        self.content.binding = [["box", "General", [["line", "Stage ID", "stage", 0]]]]
+        self.content.binding = [
+            [
+                "box",
+                "General",
+                [["line", "Stage ID", "stage", randint(100000000)]],
+            ]  # TODO: replace as this is ugly but sufficient
+        ]

@@ -38,6 +38,7 @@ class Node_Emit(SystemNode):
                 "box",
                 "Emission",
                 [
+                    ["line", "Delay", "delay", 0],
                     ["line", "Duration", "duration", 1.5],
                     ["line", "Count", "count", 100],
                 ],
