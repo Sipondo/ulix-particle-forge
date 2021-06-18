@@ -12,12 +12,21 @@ class Node_Trigger(SystemNode):
     content_label_objname = "node_trigger"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[1], outputs=[])
+        super().__init__(scene, inputs=[], outputs=[])
         self.eval()
         self.setBinding()
 
     def setBinding(self):
         self.content.binding = [
+            [
+                "box",
+                "Emission",
+                [
+                    ["line", "Delay", "delay", 0],
+                    ["line", "Duration", "duration", 1.5],
+                    ["line", "Count", "count", 1],
+                ],
+            ],
             [
                 "box",
                 "General",

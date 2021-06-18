@@ -4,12 +4,12 @@ from calc_conf import *
 from calc_node_base import *
 
 
-@register_node(OP_NODE_CAMERA)
-class Node_Camera(SystemNode):
+@register_node(OP_NODE_CAMRAIL)
+class Node_Camrail(SystemNode):
     icon = "icon/camera.png"
-    op_code = OP_NODE_CAMERA
-    op_title = "Camera"
-    content_label_objname = "node_camera"
+    op_code = OP_NODE_CAMRAIL
+    op_title = "Camrail"
+    content_label_objname = "node_camrail"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[], outputs=[])
@@ -24,9 +24,10 @@ class Node_Camera(SystemNode):
                 [
                     ["line", "Mirror", "mirror", "mirrornegative"],
                     ["line", "Delay", "delay", 0],
-                    ["line", "Target Angle", "target", 20],
-                    ["line", "Speed", "speed", 10],
-                    ["line", "Friction", "friction", 3],
+                    ["line", "Duration", "duration", 1.5],
+                    ["line", "Source Angle", "source", 100],
+                    ["line", "Target Angle", "target", 200],
+                    ["line", "Equation", "equation", "x"],
                 ],
             ],
         ]

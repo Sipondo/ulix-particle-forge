@@ -32,6 +32,8 @@ LISTBOX_MIMETYPE = "application/x-item"
 
 OP_NODE_RENDER = 4
 OP_NODE_CAMERA = 5
+OP_NODE_CAMRAIL = 6
+OP_NODE_EQUATION = 7
 OP_NODE_STAGE = 8
 OP_NODE_EMIT = 9
 OP_NODE_TRIGGER = 11
@@ -108,7 +110,7 @@ binding = [
 
 GeoNodes = {}
 
-for blockfile in Path("resources/shader/p4geoblocks").glob("*.glsl"):
+for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
     with open(blockfile, "r") as infile:
         geoblock = infile.read()
     # print(blockfile.stem)
