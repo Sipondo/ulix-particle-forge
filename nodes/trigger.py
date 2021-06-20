@@ -23,7 +23,7 @@ class Node_Trigger(SystemNode):
                 "Emission",
                 [
                     ["line", "Delay", "delay", 0],
-                    ["line", "Duration", "duration", 1.5],
+                    ["line", "Duration", "duration", 0.9],
                     ["line", "Count", "count", 1],
                 ],
             ],
@@ -34,12 +34,34 @@ class Node_Trigger(SystemNode):
                     [
                         "multitoggle",
                         "",
-                        [["Hit", "hit_strength", 0.0], ["", "hit_enabled", ""],],
+                        [["Hit", "hit", 0.0], ["", "hit_enabled", ""],],
                     ],
                     [
                         "multitoggle",
                         "",
                         [["Sound", "sound_path", ""], ["", "sound_enabled", ""],],
+                    ],
+                    [
+                        "multitoggle",
+                        "",
+                        [["Shake", "shake", 0.5], ["", "shake_enabled", ""],],
+                    ],
+                ],
+            ],
+            [
+                "box",
+                "Darkness",
+                [
+                    ["toggle", "Dark Enabled", "dark_enabled", ""],
+                    ["toggle", "Dark Recover", "dark_recover", True],
+                    ["line", "Dark", "dark", 0.5],
+                    [
+                        "multitoggle",
+                        "",
+                        [
+                            ["Dark Speed", "dark_speed", 1.0],
+                            ["", "dark_speed_enabled", True],
+                        ],
                     ],
                 ],
             ],

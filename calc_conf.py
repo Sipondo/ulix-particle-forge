@@ -30,6 +30,7 @@ class Int4Hash:
 
 LISTBOX_MIMETYPE = "application/x-item"
 
+OP_NODE_ACTOR = 3
 OP_NODE_RENDER = 4
 OP_NODE_CAMERA = 5
 OP_NODE_CAMRAIL = 6
@@ -37,8 +38,6 @@ OP_NODE_EQUATION = 7
 OP_NODE_STAGE = 8
 OP_NODE_EMIT = 9
 OP_NODE_TRIGGER = 11
-OP_NODE_TRANSFORM = max(12, Int4Hash.as_int("transform"))
-print(OP_NODE_TRANSFORM)
 
 CALC_NODES = {}
 
@@ -110,7 +109,10 @@ binding = [
 
 GeoNodes = {}
 
-for blockfile in Path("/resources/shader/p4geoblocks").glob("*.glsl"):
+with open(Path("game_location.txt"), "r") as infile:
+    block_location = infile.read().strip()
+
+for blockfile in (Path(block_location) / "resources/shader/p4geoblocks").glob("*.glsl"):
     with open(blockfile, "r") as infile:
         geoblock = infile.read()
     # print(blockfile.stem)

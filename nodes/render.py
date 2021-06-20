@@ -12,7 +12,7 @@ class Node_Render(SystemNode):
     content_label_objname = "node_render"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[1], outputs=[])
+        super().__init__(scene, inputs=[2], outputs=[])
         self.eval()
         self.setBinding()
 

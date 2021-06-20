@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 particle/
+
+game_location.txt

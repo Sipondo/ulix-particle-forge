@@ -25,7 +25,7 @@ class Node_Camera(SystemNode):
                     ["line", "Mirror", "mirror", "mirrornegative"],
                     ["line", "Delay", "delay", 0],
                     ["line", "Target Angle", "target", 20],
-                    ["line", "Speed", "speed", 10],
+                    ["line", "Speed", "speed", 1],
                     ["line", "Friction", "friction", 3],
                 ],
             ],

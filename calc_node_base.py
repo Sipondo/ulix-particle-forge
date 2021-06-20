@@ -56,8 +56,8 @@ class SystemNode(Node):
 
     def __init__(self, scene, inputs=[1], outputs=[]):
         if "filter" == self.op_title[:6].lower():
-            inputs = [1, 0]
-            outputs = []
+            inputs = [3, 0]
+            outputs = [1]
         super().__init__(scene, self.__class__.op_title, inputs, outputs)
 
         self.value = None
@@ -139,7 +139,7 @@ class SystemNode(Node):
         self.content = NodeContent(self)
         self.grNode = GraphicsNode(self)
         self.grNode.width = 200
-        self.grNode.height = 60
+        self.grNode.height = 60 if self.op_title != "Stage" else 90
 
     def evalImplementation(self):
         self.markDirty(False)

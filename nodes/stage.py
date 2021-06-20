@@ -13,7 +13,7 @@ class Node_Stage(SystemNode):
     content_label_objname = "node_stage"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[], outputs=[0, 1])
+        super().__init__(scene, inputs=[], outputs=[0, 1, 2, 3])
         self.eval()
         self.setBinding()
 
