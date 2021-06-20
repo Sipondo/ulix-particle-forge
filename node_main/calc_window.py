@@ -12,12 +12,14 @@ from nodeeditor.utils import dumpException, pp
 from calc_conf import *
 from calls import *
 
+from functools import partial
+
 # Enabling edge validators
 from nodeeditor.node_edge import Edge
 from nodeeditor.node_edge_validators import *
 
 Edge.registerEdgeValidator(edge_validator_debug)
-#Edge.registerEdgeValidator(edge_cannot_connect_two_outputs_or_two_inputs)
+# Edge.registerEdgeValidator(edge_cannot_connect_two_outputs_or_two_inputs)
 Edge.registerEdgeValidator(edge_cannot_connect_input_and_output_of_same_node)
 
 
@@ -149,7 +151,10 @@ class CalculatorWindow(NodeEditorWindow):
         )
 
         self.actRun = QAction(
-            "&Run", self, statusTip="Run the system", triggered=run_nodes,
+            "&Run",
+            self,
+            statusTip="Run the system",
+            triggered=partial(run_nodes, self),
         )
 
     def getCurrentNodeEditorWidget(self):
