@@ -20,10 +20,18 @@ class Node_Camera(SystemNode):
         self.content.binding = [
             [
                 "box",
+                "Emission",
+                [
+                    ["line", "Delay", "delay", 0],
+                    ["line", "Duration", "duration", 0.9],
+                    ["line", "Count", "count", 1],
+                ],
+            ],
+            [
+                "box",
                 "General",
                 [
                     ["line", "Mirror", "mirror", "mirrornegative"],
-                    ["line", "Delay", "delay", 0],
                     ["line", "Target Angle", "target", 20],
                     ["line", "Speed", "speed", 1],
                     ["line", "Friction", "friction", 3],
