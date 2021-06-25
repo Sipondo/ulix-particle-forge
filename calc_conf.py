@@ -112,7 +112,12 @@ GeoNodes = {}
 with open(Path("game_location.txt"), "r") as infile:
     block_location = infile.read().strip()
 
-for blockfile in (Path(block_location) / "resources/shader/p4geoblocks").glob("*.glsl"):
+dirs = []
+resource_dirs = list(Path(block_location).glob("resources/*/"))
+for dir in resource_dirs:
+    if dir.is_dir():
+        dirs.append(dir)
+for blockfile in (Path(block_location) / dir / "shader/p4geoblocks").glob("*.glsl"):
     with open(blockfile, "r") as infile:
         geoblock = infile.read()
     # print(blockfile.stem)
