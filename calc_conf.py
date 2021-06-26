@@ -114,146 +114,153 @@ with open(Path("game_location.txt"), "r") as infile:
 
 dirs = []
 resource_dirs = list(Path(block_location).glob("resources/*/"))
+print(resource_dirs)
 for dir in resource_dirs:
     if dir.is_dir():
+        print(dir)
         dirs.append(dir)
-for blockfile in (Path(block_location) / dir / "shader/p4geoblocks").glob("*.glsl"):
-    with open(blockfile, "r") as infile:
-        geoblock = infile.read()
-    # print(blockfile.stem)
-    constants = geoblock.split("// CONSTANTS")[1].split("// CONSTANTS_END")[0].strip()
+for dir in dirs:
+    for blockfile in (dir / "shader/p4geoblocks").glob("*.glsl"):
+        with open(blockfile, "r") as infile:
+            geoblock = infile.read()
+        # print(blockfile.stem)
+        constants = (
+            geoblock.split("// CONSTANTS")[1].split("// CONSTANTS_END")[0].strip()
+        )
 
-    # print(constants.split("\n"))
+        # print(constants.split("\n"))
 
-    binding = []
-    box = []
+        binding = []
+        box = []
 
-    for line in constants.split("\n"):
-        if line[:5] == "// --":
-            box = ["box", line[6:].strip(), []]
-            binding.append(box)
-            continue
+        for line in constants.split("\n"):
+            if line[:5] == "// --":
+                box = ["box", line[6:].strip(), []]
+                binding.append(box)
+                continue
 
-        perc_parts = line.split("%")
-        typ = perc_parts[0]
-        varn = perc_parts[1]
-        value = perc_parts[2].split("=")[1].split(";")[0].strip()
+            perc_parts = line.split("%")
+            typ = perc_parts[0]
+            varn = perc_parts[1]
+            value = perc_parts[2].split("=")[1].split(";")[0].strip()
 
-        if typ in ("float", "int",):
-            box[2].append(["line", varn.replace("_", " ").capitalize(), varn, value])
-        if typ in ("bool",):
-            if len(box[2]):
-                prev = box[2][-1]
+            if typ in ("float", "int",):
+                box[2].append(
+                    ["line", varn.replace("_", " ").capitalize(), varn, value]
+                )
+            if typ in ("bool",):
+                if len(box[2]):
+                    prev = box[2][-1]
 
-                if prev[0] == "toggle":
-                    box[2].pop()
-                    box[2].append(
-                        [
-                            "multitog",
-                            "",
+                    if prev[0] == "toggle":
+                        box[2].pop()
+                        box[2].append(
                             [
-                                prev[1:],
+                                "multitog",
+                                "",
                                 [
-                                    varn.replace("_", " ").capitalize(),
-                                    varn,
-                                    value.lower().strip() == "true",
+                                    prev[1:],
+                                    [
+                                        varn.replace("_", " ").capitalize(),
+                                        varn,
+                                        value.lower().strip() == "true",
+                                    ],
                                 ],
-                            ],
-                        ]
-                    )
-                    continue
-                if prev[0] == "multitog":
-                    box[2].pop()
-                    box[2].append(
-                        [
-                            "multitog",
-                            "",
-                            prev[2]
-                            + [
-                                [
-                                    varn.replace("_", " ").capitalize(),
-                                    varn,
-                                    value.lower().strip()[-1]
-                                    if value.lower().strip()[-1] in ("y", "z")
-                                    else value.lower().strip() == "true",
-                                ]
-                            ],
-                        ]
-                    )
-                    # print(box[2])
-                    continue
-            box[2].append(
-                [
-                    "toggle",
-                    varn.replace("_", " ").capitalize(),
-                    varn,
-                    value.lower().strip() == "true",
-                ]
-            )
-        if typ == "vec3":
-            value = value.split("(")[1].split(")")[0].strip().split(",")
-            # box[2].append(
-            #     [
-            #         "line",
-            #         f'{varn.replace("_", " ").capitalize()} x',
-            #         f"{varn}_X",
-            #         value[0],
-            #     ]
-            # )
-            # box[2].append(
-            #     [
-            #         "line",
-            #         f'{varn.replace("_", " ").capitalize()} y',
-            #         f"{varn}_Y",
-            #         value[1],
-            #     ]
-            # )
-            # box[2].append(
-            #     [
-            #         "line",
-            #         f'{varn.replace("_", " ").capitalize()} z',
-            #         f"{varn}_Z",
-            #         value[2],
-            #     ]
-            # )
-            box[2].append(
-                [
-                    "multi",
-                    varn.replace("_", " ").capitalize(),
+                            ]
+                        )
+                        continue
+                    if prev[0] == "multitog":
+                        box[2].pop()
+                        box[2].append(
+                            [
+                                "multitog",
+                                "",
+                                prev[2]
+                                + [
+                                    [
+                                        varn.replace("_", " ").capitalize(),
+                                        varn,
+                                        value.lower().strip()[-1]
+                                        if value.lower().strip()[-1] in ("y", "z")
+                                        else value.lower().strip() == "true",
+                                    ]
+                                ],
+                            ]
+                        )
+                        # print(box[2])
+                        continue
+                box[2].append(
                     [
-                        [f"x", f"{varn}_X", value[0]],
-                        [f"y", f"{varn}_Y", value[1]],
-                        [f"z", f"{varn}_Z", value[2]],
+                        "toggle",
+                        varn.replace("_", " ").capitalize(),
+                        varn,
+                        value.lower().strip() == "true",
+                    ]
+                )
+            if typ == "vec3":
+                value = value.split("(")[1].split(")")[0].strip().split(",")
+                # box[2].append(
+                #     [
+                #         "line",
+                #         f'{varn.replace("_", " ").capitalize()} x',
+                #         f"{varn}_X",
+                #         value[0],
+                #     ]
+                # )
+                # box[2].append(
+                #     [
+                #         "line",
+                #         f'{varn.replace("_", " ").capitalize()} y',
+                #         f"{varn}_Y",
+                #         value[1],
+                #     ]
+                # )
+                # box[2].append(
+                #     [
+                #         "line",
+                #         f'{varn.replace("_", " ").capitalize()} z',
+                #         f"{varn}_Z",
+                #         value[2],
+                #     ]
+                # )
+                box[2].append(
+                    [
+                        "multi",
+                        varn.replace("_", " ").capitalize(),
+                        [
+                            [f"x", f"{varn}_X", value[0]],
+                            [f"y", f"{varn}_Y", value[1]],
+                            [f"z", f"{varn}_Z", value[2]],
+                        ],
                     ],
-                ],
-            )
+                )
 
-    name = " ".join(
-        [
-            x.capitalize()
-            for x in f"{'Geo ' if not 'filter' in blockfile.stem.lower() else ''}{blockfile.stem.capitalize()}".replace(
-                "_", " "
-            ).split(
-                " "
-            )
-        ]
-    )
-    system_name = name.replace(" ", "_")
-    h = Int4Hash.as_int(blockfile.stem)
+        name = " ".join(
+            [
+                x.capitalize()
+                for x in f"{'Geo ' if not 'filter' in blockfile.stem.lower() else ''}{blockfile.stem.capitalize()}".replace(
+                    "_", " "
+                ).split(
+                    " "
+                )
+            ]
+        )
+        system_name = name.replace(" ", "_")
+        h = Int4Hash.as_int(blockfile.stem)
 
-    GeoNodes[h] = type(
-        system_name,
-        (SystemNode,),
-        {
-            # constructor
-            # data members
-            "icon": "icon/geo.png"
-            if "filter" not in name.lower()
-            else "icon/filter.png",
-            "op_code": h,
-            "op_title": name,
-            "content_label_objname": system_name,
-            "binding": binding,
-        },
-    )
-    register_node_now(h, GeoNodes[h])
+        GeoNodes[h] = type(
+            system_name,
+            (SystemNode,),
+            {
+                # constructor
+                # data members
+                "icon": "icon/geo.png"
+                if "filter" not in name.lower()
+                else "icon/filter.png",
+                "op_code": h,
+                "op_title": name,
+                "content_label_objname": system_name,
+                "binding": binding,
+            },
+        )
+        register_node_now(h, GeoNodes[h])
