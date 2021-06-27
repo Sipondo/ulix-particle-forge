@@ -28,12 +28,4 @@ class Node_Render(SystemNode):
                     ["line", "Opacity", "opacity", 1.0],
                 ],
             ],
-            [
-                "box",
-                "Blur",
-                [
-                    ["line", "Count", "blur_count", 3],
-                    ["line", "Delay", "blur_delay", 0.1],
-                ],
-            ],
         ]
