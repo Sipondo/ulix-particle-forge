@@ -24,8 +24,9 @@ class Node_Render(SystemNode):
                 [
                     ["line", "Filename", "file", "scorch_01"],
                     ["line", "Equation", "equation", "Add"],
-                    ["line", "Depth", "depth", 0],
+                    ["line", "Noise", "noise", 1.0],
                     ["line", "Opacity", "opacity", 1.0],
+                    ["toggle", "Rotation by Velocity", "rotvel", ""],
                 ],
             ],
         ]

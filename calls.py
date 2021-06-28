@@ -8,5 +8,5 @@ with open(Path("game_location.txt"), "r") as infile:
 def run_nodes(parent):
     window = parent.mdiArea.activeSubWindow()
     if window:
-        title = window.windowTitle().replace(".json", "")
+        title = window.windowTitle().replace(".json", "").replace("*", "")
         subprocess.Popen(f'python game.py --particle "{title}"', cwd=block_location)
